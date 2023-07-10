@@ -95,6 +95,51 @@ containerMain.appendChild(buttGameOver);
 containerMain.appendChild(buttHold);
 containerMain.appendChild(cell10);
 
+///BURGER-MENU////
+let menuBtn = document.querySelector(".menu-btn");
+let menu = document.querySelector(".menu");
+
+menuBtn.addEventListener("click", function () {
+  menuBtn.classList.toggle("active");
+  menu.classList.toggle("active");
+});
+
+/////MODAL ALERT///
+const modal = document.createElement("dialog");
+modal.className = "modal";
+const modalBox = document.createElement("div");
+modalBox.id = "modal-box";
+const modalContent = document.createElement("div");
+modalContent.className = "modal-content";
+const closeModalBtn = document.createElement("button");
+closeModalBtn.id = "close-modal-btn";
+closeModalBtn.textContent = "Ok";
+
+modalBox.appendChild(modalContent);
+modalBox.appendChild(closeModalBtn);
+modal.appendChild(modalBox);
+containerMain.appendChild(modal);
+
+let isModalOpen = false;
+
+closeModalBtn.addEventListener("click", () => {
+  modal.close();
+  isModalOpen = false;
+});
+
+document.addEventListener("click", (e) => {
+  if (isModalOpen && !modalBox.contains(e.target)) {
+    modal.close();
+  }
+});
+
+const alert = (event, message) => {
+  modalContent.innerHTML = message;
+  modal.showModal();
+  isModalOpen = true;
+  event.stopPropagation();
+};
+
 /////FUNCTIONALITé///////
 
 let global, round, joueur, hold, fin;
@@ -112,21 +157,24 @@ const initialisation = () => {
   img2.src = "./images/9.png";
 };
 
-const clickSurButtonHold = () => {
-  console.log(hold);
-  if (round === 1 || hold) {
-    alert("ce n'est plus votre tour!");
+const clickSurButtonHold = (e) => {
+  if (round === 1) {
+    alert(e, "Ce n'est plus votre tour!");
+    return;
+  } else if (hold) {
+    alert(e, "Cliquez sur le bouton Lancer le dé!");
     return;
   } else {
     global[joueur - 1] += round;
     if (joueur === 1) global1Html.innerHTML = global[0];
     else global2Html.innerHTML = global[1];
-    console.log("fin de course");
     round = 0;
+    roundHtml.innerHTML = round;
+    img1.src = "./images/9.png";
+    img2.src = "./images/9.png";
+    hold = true;
+    final(e);
   }
-  hold = true;
-
-  final();
 };
 
 const changeJoueur = () => {
@@ -135,17 +183,16 @@ const changeJoueur = () => {
   else if (global[0] === 0 && round[0] === 1 && round[1] !== 1) joueur = 2;
 
   if (joueur === 2) {
-    cell2.textContent = "Joueur 2";
+    cell2.innerHTML = "Joueur 2";
     cell2.style.backgroundColor = "green";
   } else {
-    cell2.textContent = "Joueur 1";
+    cell2.innerHTML = "Joueur 1";
     cell2.style.backgroundColor = "yellow";
   }
-
-  hold = false;
 };
 
-const clickSurBouton = (joueur) => {
+const clickSurBouton = (e) => {
+  hold = false;
   round = lancerDe();
   roundHtml.innerHTML = round;
   img1.src = imgDice(round);
@@ -155,7 +202,7 @@ const clickSurBouton = (joueur) => {
     hold = true;
   }
 
-  final();
+  final(e);
 };
 
 const lancerDe = () => {
@@ -165,13 +212,13 @@ const lancerDe = () => {
   return nombre;
 };
 
-const final = () => {
+const final = (e) => {
   if (global[1] > 0) {
     if (global[0] >= 100 && !fin) {
-      alert("joueur1 à gagné !");
+      alert(e, "joueur1 à gagné !");
       fin = true;
     } else if (global[1] >= 100 && !fin) {
-      alert("joueur2 à gagné !");
+      alert(e, "joueur2 à gagné !");
       fin = true;
     } else changeJoueur();
   } else changeJoueur();
@@ -205,7 +252,7 @@ const imgDice = (dice) => {
 initialisation();
 
 buttMain.addEventListener("click", (event) => {
-  if (fin) alert("partie finie, retenter votre chance!");
+  if (fin) alert(event, "partie finie, retenter votre chance!");
   else {
     clickSurBouton(joueur);
   }

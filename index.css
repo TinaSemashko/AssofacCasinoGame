@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
   height: 100vh;
   text-align: center;
   align-items: center;
@@ -17,7 +16,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
   height: 100vh;
   align-items: center;
   overflow: hidden;
@@ -308,6 +306,98 @@ form select {
   color: white;
 }
 
+#modal-box {
+  width: 20vw;
+  height: 20vh;
+
+  font-size: 4vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#close-modal-btn {
+  width: 3vw;
+  background-color: black;
+  color: antiquewhite;
+}
+
+.modal {
+  border: solid white;
+  border-radius: 10%;
+  background: radial-gradient(
+    circle,
+    rgba(29, 177, 37, 1) 47%,
+    rgba(9, 61, 18, 1) 100%
+  );
+}
+
+.menu-btn {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+
+  padding-right: 5vw;
+}
+
+.menu-btn span {
+  width: 30px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: yellow;
+  transition: all 0.5s;
+}
+
+.menu-btn span:nth-of-type(2) {
+  top: calc(50% - 10px);
+}
+.menu-btn span:nth-of-type(3) {
+  top: calc(50% + 10px);
+}
+
+.menu-btn.active span:nth-of-type(1) {
+  display: none;
+}
+.menu-btn.active span:nth-of-type(2) {
+  top: 50%;
+  transform: translate(-50%, 0%) rotate(45deg);
+}
+.menu-btn.active span:nth-of-type(3) {
+  top: 50%;
+  transform: translate(-50%, 0%) rotate(-45deg);
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 100%;
+  padding: 15px;
+  background: #3b4236;
+  opacity: 0.8;
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.menu.active {
+  transform: translateX(0);
+}
+
+.menu li {
+  list-style-type: none;
+}
+
 @media (max-width: 800px) {
   .img {
     display: none;
@@ -318,5 +408,42 @@ form select {
 
   .container {
     width: 100%;
+  }
+
+  .menu {
+    width: 100%;
+  }
+
+  .item {
+    display: none;
+  }
+
+  .container .cell1 {
+    grid-column: 1 / span 2;
+    color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vw;
+  }
+
+  .container .cell2 {
+    font-size: 8vw;
+  }
+
+  .container .cell3 {
+    font-size: 5vw;
+  }
+
+  .container .cell24 {
+    font-size: 6vw;
+  }
+
+  .container .cell25 {
+    font-size: 6vw;
+  }
+
+  .menu-btn {
+    padding-right: 15vw;
   }
 }
