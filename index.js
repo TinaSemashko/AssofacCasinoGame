@@ -153,8 +153,31 @@ const initialisation = () => {
   global1Html.innerHTML = global[0];
   global2Html.innerHTML = global[1];
   roundHtml.innerHTML = round;
+  cell2.innerHTML = "Jouer 1";
+  cell2.style.backgroundColor = "yellow";
   img1.src = "./images/9.png";
   img2.src = "./images/9.png";
+};
+
+initialisation();
+
+const clickSurBouton = (e) => {
+  hold = false;
+
+  round = lancerDe();
+  roundHtml.innerHTML = round;
+  img1.src = imgDice(round);
+  img2.src = imgDice(round);
+
+  if (round === 1) hold = true;
+  final(e);
+};
+
+const lancerDe = () => {
+  const nombreDécimal = Math.random() * 6 + 1;
+  const nombre = Math.trunc(nombreDécimal);
+
+  return nombre;
 };
 
 const clickSurButtonHold = (e) => {
@@ -180,7 +203,6 @@ const clickSurButtonHold = (e) => {
 const changeJoueur = () => {
   if (hold && joueur === 1) joueur = 2;
   else if (hold && joueur === 2) joueur = 1;
-  else if (global[0] === 0 && round[0] === 1 && round[1] !== 1) joueur = 2;
 
   if (joueur === 2) {
     cell2.innerHTML = "Joueur 2";
@@ -189,27 +211,6 @@ const changeJoueur = () => {
     cell2.innerHTML = "Joueur 1";
     cell2.style.backgroundColor = "yellow";
   }
-};
-
-const clickSurBouton = (e) => {
-  hold = false;
-  round = lancerDe();
-  roundHtml.innerHTML = round;
-  img1.src = imgDice(round);
-  img2.src = imgDice(round);
-
-  if (round === 1) {
-    hold = true;
-  }
-
-  final(e);
-};
-
-const lancerDe = () => {
-  const nombreDécimal = Math.random() * 6 + 1;
-  const nombre = Math.trunc(nombreDécimal);
-
-  return nombre;
 };
 
 const final = (e) => {
