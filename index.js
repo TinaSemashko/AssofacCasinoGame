@@ -96,8 +96,8 @@ containerMain.appendChild(buttHold);
 containerMain.appendChild(cell10);
 
 ///BURGER-MENU////
-let menuBtn = document.querySelector(".menu-btn");
-let menu = document.querySelector(".menu");
+const menuBtn = document.querySelector(".menu-btn");
+const menu = document.querySelector(".menu");
 
 menuBtn.addEventListener("click", function () {
   menuBtn.classList.toggle("active");
@@ -249,8 +249,6 @@ const imgDice = (dice) => {
       "./images/9.png";
   }
 };
-
-initialisation();
 
 buttMain.addEventListener("click", (event) => {
   if (fin) alert(event, "partie finie, retenter votre chance!");
